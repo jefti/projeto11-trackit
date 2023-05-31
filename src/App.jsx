@@ -1,14 +1,20 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PaginaLogin from './pages/paginalogin';
+import PaginaCadastro from './pages/paginaCadastro';
 
 function App() {
+	return (
+		<BrowserRouter>
+			{/* Tudo que tiver uma rota entre Routes */}
+			<Routes>
+				{/* Cada rota tem que estar em Route */}
+				<Route path="/" element={<PaginaLogin />} />
+        <Route path="/cadastro" element={<PaginaCadastro />} />
 
-
-  return (
-    <>
-    Página
-    </>
-  )
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
 export default App
