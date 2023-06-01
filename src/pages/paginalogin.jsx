@@ -1,23 +1,36 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import axios from "axios";
+import UserContext from "../context/userContext";
+import { ThreeDots } from  'react-loader-spinner';
 
 export default function PaginaLogin(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [desabilitar, setDesabilitar] = useState(false);
+    const {usuario, setUsuario} = useContext(UserContext);
+
+    const nav = useNavigate();
 
     function entrar(e){
         e.preventDefault();
         if(email && password){
+            setDesabilitar(true);
             const url = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
             const obj = {email, password};
             const promise = axios.post(url,obj);
-            promise.then(resp => console.log(resp.data));
+            promise.then(resp => {
+                console.log(resp.data);
+                const user = {...resp.data};
+                setUsuario(user);
+                nav("/habitos");
+            });
+
             promise.catch(erro => {
                 console.log(erro.response.data.message);
                 alert(erro.response.data.message);
+                setDesabilitar(false);
             });
         } else {
             alert('preencha os campos para prosseguir!')
@@ -33,12 +46,14 @@ export default function PaginaLogin(){
                     placeholder="email"
                     type="email"
                     value={email}
+                    id='email'
                     onChange = {(e)=> setEmail(e.target.value)}
                 ></CaixaTexto>
 
                 <CaixaTexto 
                     placeholder="senha"
                     type = "password"
+                    id = 'password'
                     value={password}
                     onChange={(e)=> setPassword(e.target.value)}
                 ></CaixaTexto>
@@ -105,7 +120,11 @@ const BotaoEstilizado = styled.button`
     margin: 3px;
     color: white;
     font-Weight: 400;
-    font-Size: 20px
+    font-Size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: ${props => props.disabled? "0.7" : "1"};
 `
 
 const TextoCadastro = styled.p`
