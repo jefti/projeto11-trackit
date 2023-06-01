@@ -1,17 +1,83 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { ThreeDots } from  'react-loader-spinner';
+
 export default function PaginaCadastro(){
+    const[email, setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const[name, setName] = useState('');
+    const [image,setImage] = useState('');
+    const [desabilitar, setDesabilitar] = useState(false);
+    const nav = useNavigate();
+
+    function cadastrar(e){
+        if(email && name && image && password){
+            setDesabilitar(true);
+            e.preventDefault();
+            const obj = {email,name,image,password};
+            //console.log(obj);
+            const url = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up';
+            const Promise = axios.post(url,obj);
+            Promise.then(()=>{
+                nav('/');
+            });
+            
+            Promise.catch(erro=> {
+                console.log(erro);
+                const resposta = erro.response.data.message;
+                alert(resposta);
+                setDesabilitar(false);
+            });
+        } else {
+            alert('preencha todos os campos para seguir!')
+        }
+    }
+
     return(
         <EstiloPagina>
         <img src="assets/logo.png"></img>
-        <Formulario>
-            <CaixaTexto placeholder="email"></CaixaTexto>
-            <CaixaTexto placeholder="senha"></CaixaTexto>
-            <CaixaTexto placeholder="nome"></CaixaTexto>
-            <CaixaTexto placeholder="foto"></CaixaTexto>
-            <BotaoEstilizado>Cadastrar</BotaoEstilizado>
+        <Formulario onSubmit={cadastrar}>
+            <CaixaTexto 
+                placeholder="email"
+                type="email"
+                value ={email}
+                onChange= { e=> setEmail(e.target.value)}
+            ></CaixaTexto>
+
+            <CaixaTexto 
+                placeholder="senha"
+                type="password"
+                value ={password}
+                onChange= { e=> setPassword(e.target.value)}
+            ></CaixaTexto>
+
+            <CaixaTexto 
+                placeholder="nome"
+                type="text"
+                value ={name}
+                onChange= { e=> setName(e.target.value)}
+            ></CaixaTexto>
+
+            <CaixaTexto 
+                placeholder="foto"
+                type="text"
+                value ={image}
+                onChange= { e=> setImage(e.target.value)}
+            ></CaixaTexto>
+
+
+            <BotaoEstilizado type="submit" disabled= {desabilitar}>
+                {desabilitar
+                ? <ThreeDots height="13"width="50" redius="90"color="white" ariaLabel="three-dots-loading" visible={true}/>
+                : "Cadastrar"}
+            </BotaoEstilizado>
+
             <Link to={"/"}><TextoCadastro>Já tem uma conta? faça o login!</TextoCadastro></Link>
         </Formulario>
+
+
         </EstiloPagina>
     );
 }
@@ -65,7 +131,11 @@ const BotaoEstilizado = styled.button`
     margin: 3px;
     color: white;
     font-Weight: 400;
-    font-Size: 20px
+    font-Size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: ${props => props.disabled? "0.7" : "1"};
 `
 
 const TextoCadastro = styled.p`

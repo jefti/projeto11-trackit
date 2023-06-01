@@ -4,13 +4,14 @@ import PaginaLogin from './pages/paginalogin';
 import PaginaCadastro from './pages/paginaCadastro';
 
 function App() {
+
+
 	return (
 		<BrowserRouter>
 			{/* Tudo que tiver uma rota entre Routes */}
 			<Routes>
-				{/* Cada rota tem que estar em Route */}
 				<Route path="/" element={<PaginaLogin />} />
-        <Route path="/cadastro" element={<PaginaCadastro />} />
+        		<Route path="/cadastro" element={<PaginaCadastro />} />
 
 			</Routes>
 		</BrowserRouter>

@@ -1,13 +1,55 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+
 export default function PaginaLogin(){
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [desabilitar, setDesabilitar] = useState(false);
+
+    function entrar(e){
+        e.preventDefault();
+        if(email && password){
+            const url = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
+            const obj = {email, password};
+            const promise = axios.post(url,obj);
+            promise.then(resp => console.log(resp.data));
+            promise.catch(erro => {
+                console.log(erro.response.data.message);
+                alert(erro.response.data.message);
+            });
+        } else {
+            alert('preencha os campos para prosseguir!')
+        }
+
+    }
+
     return (
     <EstiloPagina>
             <img src="assets/logo.png"></img>
-            <Formulario>
-                <CaixaTexto placeholder="email"></CaixaTexto>
-                <CaixaTexto placeholder="senha"></CaixaTexto>
-                <BotaoEstilizado>Entrar</BotaoEstilizado>
+            <Formulario onSubmit={entrar}>
+                <CaixaTexto 
+                    placeholder="email"
+                    type="email"
+                    value={email}
+                    onChange = {(e)=> setEmail(e.target.value)}
+                ></CaixaTexto>
+
+                <CaixaTexto 
+                    placeholder="senha"
+                    type = "password"
+                    value={password}
+                    onChange={(e)=> setPassword(e.target.value)}
+                ></CaixaTexto>
+
+                <BotaoEstilizado type="submit" disabled= {desabilitar}>
+                    {desabilitar
+                    ? <ThreeDots height="13"width="50" redius="90"color="white" ariaLabel="three-dots-loading" visible={true}/>
+                    : "Entrar"}
+                </BotaoEstilizado>
+
+
             </Formulario>
             <Link to={"/cadastro"}><TextoCadastro>Não tem uma conta? Cadastre-se!</TextoCadastro></Link>
     </EstiloPagina>
