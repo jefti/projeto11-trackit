@@ -6,9 +6,13 @@ import UserContext from "../context/userContext";
 import { ThreeDots } from  'react-loader-spinner';
 
 export default function PaginaLogin(){
-    const [email, setEmail] = useState('');
+
+	const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+
     const [desabilitar, setDesabilitar] = useState(false);
+
     const {usuario, setUsuario} = useContext(UserContext);
 
     const nav = useNavigate();
@@ -17,8 +21,8 @@ export default function PaginaLogin(){
         e.preventDefault();
         if(email && password){
             setDesabilitar(true);
-            const url = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
             const obj = {email, password};
+            const url = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
             const promise = axios.post(url,obj);
             promise.then(resp => {
                 console.log(resp.data);
@@ -42,7 +46,8 @@ export default function PaginaLogin(){
     <EstiloPagina>
             <img src="assets/logo.png"></img>
             <Formulario onSubmit={entrar}>
-                <CaixaTexto 
+                <CaixaTexto
+                    data-test = "email-input" 
                     placeholder="email"
                     type="email"
                     value={email}
@@ -52,13 +57,14 @@ export default function PaginaLogin(){
 
                 <CaixaTexto 
                     placeholder="senha"
+                    data-test = "password-input"
                     type = "password"
                     id = 'password'
                     value={password}
                     onChange={(e)=> setPassword(e.target.value)}
                 ></CaixaTexto>
 
-                <BotaoEstilizado type="submit" disabled= {desabilitar}>
+                <BotaoEstilizado type="submit" disabled= {desabilitar} data-test="login-btn">
                     {desabilitar
                     ? <ThreeDots height="13"width="50" redius="90"color="white" ariaLabel="three-dots-loading" visible={true}/>
                     : "Entrar"}
@@ -66,7 +72,7 @@ export default function PaginaLogin(){
 
 
             </Formulario>
-            <Link to={"/cadastro"}><TextoCadastro>Não tem uma conta? Cadastre-se!</TextoCadastro></Link>
+            <Link to={"/cadastro"} data-test="signup-link"><TextoCadastro>Não tem uma conta? Cadastre-se!</TextoCadastro></Link>
     </EstiloPagina>
     );
 }

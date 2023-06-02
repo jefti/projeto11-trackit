@@ -39,21 +39,24 @@ export default function PaginaCadastro(){
         <EstiloPagina>
         <img src="assets/logo.png"></img>
         <Formulario onSubmit={cadastrar}>
-            <CaixaTexto 
+            <CaixaTexto
+                data-test="email-input"
                 placeholder="email"
                 type="email"
                 value ={email}
                 onChange= { e=> setEmail(e.target.value)}
             ></CaixaTexto>
 
-            <CaixaTexto 
+            <CaixaTexto
+                data-test="password-input"
                 placeholder="senha"
                 type="password"
                 value ={password}
                 onChange= { e=> setPassword(e.target.value)}
             ></CaixaTexto>
 
-            <CaixaTexto 
+            <CaixaTexto
+                data-test="user-name-input" 
                 placeholder="nome"
                 type="text"
                 value ={name}
@@ -61,6 +64,7 @@ export default function PaginaCadastro(){
             ></CaixaTexto>
 
             <CaixaTexto 
+                data-test="user-image-input" 
                 placeholder="foto"
                 type="text"
                 value ={image}
@@ -68,13 +72,13 @@ export default function PaginaCadastro(){
             ></CaixaTexto>
 
 
-            <BotaoEstilizado type="submit" disabled= {desabilitar}>
+            <BotaoEstilizado type="submit" disabled= {desabilitar} data-test="signup-btn">
                 {desabilitar
                 ? <ThreeDots height="13"width="50" redius="90"color="white" ariaLabel="three-dots-loading" visible={true}/>
                 : "Cadastrar"}
             </BotaoEstilizado>
 
-            <Link to={"/"}><TextoCadastro>Já tem uma conta? faça o login!</TextoCadastro></Link>
+            <Link to={"/"}><TextoCadastro data-test="login-link">Já tem uma conta? faça o login!</TextoCadastro></Link>
         </Formulario>
 
 

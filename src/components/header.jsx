@@ -9,9 +9,9 @@ export default function Header(){
     const {name, id, image,email,token} = usuario;
 
     return (
-    <HeaderBar>
+    <HeaderBar data-test="header">
         <p>TrackIt</p>
-        <img src={image} alt="profile" srcset="" />
+        <img src={image} alt="profile" data-test="avatar"/>
     </HeaderBar>
     );
 }
@@ -27,9 +27,10 @@ const HeaderBar = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
+    z-index: 100;
     p{
         font-family: 'Playball';
         color: white;

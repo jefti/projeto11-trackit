@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 export default function Footer(){
     return(
-        <FooterBar>
-            <p><StyledLink to={"/habitos"}>Hábitos</StyledLink></p>
+        <FooterBar data-test="menu" >
+            <p><StyledLink to={"/habitos"} data-test="habit-link">Hábitos</StyledLink></p>
             <StyledHoje>Hoje</StyledHoje>
-            <p><StyledLink to={"/historico"}>Histórico</StyledLink></p>
+            <p><StyledLink to={"/historico"} data-test="history-link">Histórico</StyledLink></p>
         </FooterBar>
     );
 }
@@ -17,9 +17,10 @@ const FooterBar = styled.div`
     height: 70px;
     
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     left: 0px;
+    z-index: 100;
 
     display: flex;
     align-items: center;
@@ -28,9 +29,9 @@ const FooterBar = styled.div`
 `
 
 const StyledLink = styled(Link)`
-  text-decoration: none;
-  margin: 1rem;
-  position: relative;
+    text-decoration: none;
+    margin: 1rem;
+    position: relative;
     color:#52B6FF;
     font-family: 'Lexend Deca';
     font-weight: 400;
