@@ -40,6 +40,7 @@ export default function PaginaCadastro(){
         <img src="assets/logo.png"></img>
         <Formulario onSubmit={cadastrar}>
             <CaixaTexto
+                disabled={desabilitar}
                 data-test="email-input"
                 placeholder="email"
                 type="email"
@@ -48,6 +49,7 @@ export default function PaginaCadastro(){
             ></CaixaTexto>
 
             <CaixaTexto
+                disabled={desabilitar}
                 data-test="password-input"
                 placeholder="senha"
                 type="password"
@@ -56,6 +58,7 @@ export default function PaginaCadastro(){
             ></CaixaTexto>
 
             <CaixaTexto
+                disabled={desabilitar}
                 data-test="user-name-input" 
                 placeholder="nome"
                 type="text"
@@ -63,7 +66,8 @@ export default function PaginaCadastro(){
                 onChange= { e=> setName(e.target.value)}
             ></CaixaTexto>
 
-            <CaixaTexto 
+            <CaixaTexto
+                disabled={desabilitar} 
                 data-test="user-image-input" 
                 placeholder="foto"
                 type="text"

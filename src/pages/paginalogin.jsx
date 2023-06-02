@@ -28,7 +28,7 @@ export default function PaginaLogin(){
                 console.log(resp.data);
                 const user = {...resp.data};
                 setUsuario(user);
-                nav("/habitos");
+                nav("/hoje");
             });
 
             promise.catch(erro => {
@@ -47,6 +47,7 @@ export default function PaginaLogin(){
             <img src="assets/logo.png"></img>
             <Formulario onSubmit={entrar}>
                 <CaixaTexto
+                    disabled={desabilitar}
                     data-test = "email-input" 
                     placeholder="email"
                     type="email"
@@ -56,6 +57,7 @@ export default function PaginaLogin(){
                 ></CaixaTexto>
 
                 <CaixaTexto 
+                    disabled={desabilitar}
                     placeholder="senha"
                     data-test = "password-input"
                     type = "password"
@@ -72,7 +74,7 @@ export default function PaginaLogin(){
 
 
             </Formulario>
-            <Link to={"/cadastro"} data-test="signup-link"><TextoCadastro>Não tem uma conta? Cadastre-se!</TextoCadastro></Link>
+            <TextoCadastro><Link to={"/cadastro"} data-test="signup-link">Não tem uma conta? Cadastre-se!</Link></TextoCadastro>
     </EstiloPagina>
     );
 }
@@ -134,13 +136,15 @@ const BotaoEstilizado = styled.button`
 `
 
 const TextoCadastro = styled.p`
+    margin-top: 25px;
+a{
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    margin-top: 25px;
     text-align: center;
-    text-decoration-line: underline;
     color: #52B6FF;
+}
+
 `

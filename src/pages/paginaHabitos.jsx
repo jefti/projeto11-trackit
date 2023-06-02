@@ -15,7 +15,7 @@ export default function PaginaHabitos(){
     const [cadastrar, setCadastrar] = useState(false);
     const [listaHabitos, setListaHabitos] = useState([]);
     console.log(listaHabitos);
-    const teste = listaHabitos.map( el => <MeuHabito key = {el.id} el={el}></MeuHabito>);
+    const HabitosPessoais = listaHabitos.map( el => <MeuHabito key = {el.id} el={el} recarregar={recarregar}></MeuHabito>);
 
     useEffect(()=>{
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
@@ -54,7 +54,7 @@ export default function PaginaHabitos(){
                 {cadastrar && <CadastrarHabito setCadastrar={setCadastrar} recarregar={recarregar}/>}
 
 
-                {teste}
+                {HabitosPessoais}
                 {(listaHabitos.length === 0) &&
                     <Aviso>
                         Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!

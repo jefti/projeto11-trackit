@@ -5,7 +5,7 @@ export default function Footer(){
     return(
         <FooterBar data-test="menu" >
             <p><StyledLink to={"/habitos"} data-test="habit-link">Hábitos</StyledLink></p>
-            <StyledHoje>Hoje</StyledHoje>
+            <StyledHoje to={"/hoje"} data-test="today-link">Hoje</StyledHoje>
             <p><StyledLink to={"/historico"} data-test="history-link">Histórico</StyledLink></p>
         </FooterBar>
     );
@@ -38,7 +38,7 @@ const StyledLink = styled(Link)`
     font-size: 17.98px;
 `;
 
-const StyledHoje = styled.div`
+const StyledHoje = styled(Link)`
     width: 90px;
     height: 90px;
     border-radius: 90px;
@@ -56,4 +56,5 @@ const StyledHoje = styled.div`
     bottom: 10px;
     left: 50%;
     transform: translate(-50%, 0);
+    text-decoration: none;
 `
