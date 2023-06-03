@@ -31,8 +31,8 @@ export default function MeuHabito(props){
         }
     }   
     return (
-        <MeuHabitoContainer>
-            {(name[0].toUpperCase() + name.slice(1))}
+        <MeuHabitoContainer data-teste="habit-container">
+            <p data-test='habit-name'>{(name[0].toUpperCase() + name.slice(1))}</p>
             <ListaDias>
                 {semana.map( (el,index)=> <DiaEstatico key= {"diaEstatico"+index} conteudo={el} estado ={days.includes(index)}></DiaEstatico>)}
             </ListaDias>

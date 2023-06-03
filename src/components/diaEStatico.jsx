@@ -4,7 +4,7 @@ export default function DiaEstatico(props){
     const {estado,conteudo} = props;
     
     return (
-    <DiaBox estado={estado}>
+    <DiaBox estado={estado} data-test="habit-day">
         {conteudo}
     </DiaBox>
     );
