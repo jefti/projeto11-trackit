@@ -65,8 +65,15 @@ export default function HabitoCheck(props){
                 <NomeHabito data-test="today-habit-name" >{name}</NomeHabito>
             </div>
             <div>
-            <TextoInformacao data-test="today-habit-sequence" >Sequência atual: <span>{currentSequence}</span></TextoInformacao>
-            <TextoInformacao data-test="today-habit-record">Seu recorde: <span>{highestSequence}</span></TextoInformacao>
+            {(done)
+            ? <TextoInformacao data-test="today-habit-sequence" >Sequência atual: <span>{currentSequence}</span></TextoInformacao>
+            : <TextoInformacao data-test="today-habit-sequence" >Sequência atual: {currentSequence}</TextoInformacao>}
+            
+            {(currentSequence === highestSequence && currentSequence > 0)
+            ?<TextoInformacao data-test="today-habit-record">Seu recorde: <span>{highestSequence}</span></TextoInformacao>
+            : <TextoInformacao data-test="today-habit-record">Seu recorde: {highestSequence}</TextoInformacao>
+            } 
+            
             </div>
         </TextoContainer>
         <BotaoSelecao done={done}>

@@ -37,5 +37,5 @@ const DiaBox = styled.button`
         display: flex;
         align-items: center;
         justify-content: center;
-        color: ${ props => props.selecionado ? "white" : "#DBDBDB"};;
+        color: ${ props => props.selecionado ? "white" : "#DBDBDB"};
 `

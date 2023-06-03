@@ -5,7 +5,10 @@ import axios from "axios";
 import UserContext from "../context/userContext";
 
 export default function CadastrarHabito(props){
-    let desabilitado = false;
+    //let desabilitado = false;
+    const [desabilitado, setDesabilitado] = useState(false);
+
+
     const {recarregar} = props;
     const [cadastrar, setCadastrar] = useState(false);
     const [listaDias, setListaDias] = useState([false,false,false,false,false,false,false]);
@@ -23,7 +26,8 @@ export default function CadastrarHabito(props){
     }
 
     function EnviarServidor(e){
-        desabilitado = true;
+        setDesabilitado(true);
+        //desabilitado = true;
         e.preventDefault();
         let listaEnvio = [];
         for(let index = 0; index < listaDias.length; index++ ){
@@ -34,10 +38,12 @@ export default function CadastrarHabito(props){
         
         if(listaEnvio.length === 0){
             alert('selecione dias da semana para o hábito');
-            desabilitado = false;
+            //desabilitado = false;
+            setDesabilitado(false);
         } else if(novoHabito === ''){
             alert('preencha o titulo do novo habito para continuar');
-            desabilitado = false;
+            //desabilitado = false;
+            setDesabilitado(false);
         }else{
             let obj = {name: novoHabito, days: [...listaEnvio] };
             //console.log(obj.days);
@@ -52,12 +58,14 @@ export default function CadastrarHabito(props){
                 setCadastrar(false);
                 setListaDias([false,false,false,false,false,false,false]);
                 setNovoHabito('');
-                desabilitado = false;
+                //desabilitado = false;
+                setDesabilitado(false);
                 recarregar();
             });
             promise.catch( erro => {
                 console.log(erro);
-                desabilitado = false;
+                //desabilitado = false;
+                setDesabilitado(false);
             });
 
 
@@ -139,6 +147,7 @@ const BtnCancelar = styled.button`
         font-size: 16px;
         color: #52B6FF;
         margin-right: 23px;
+
 `
 
 const BtnEnviar = styled.button`
@@ -151,6 +160,7 @@ const BtnEnviar = styled.button`
         font-weight: 400;
         font-size: 16px;
         color: white;
+
 
 `
 
@@ -174,5 +184,6 @@ const CreateBox = styled.div`
         background-color: #52B6FF;
         font-size: 27px;
         color: white;
+
      }
 `
