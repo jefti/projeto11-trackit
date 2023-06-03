@@ -7,8 +7,19 @@ import 'react-circular-progressbar/dist/styles.css';
 import BarraProgresso from "./barraProgresso";
 
 export default function Footer(){
-    const {listaDiaria,porcentagem} = useContext(UserContext);
-
+    const {listaDiaria} = useContext(UserContext);
+    let total = listaDiaria.length;
+    let feitos = 0;
+    let porcentagem = 0;
+    for(let i=0; i<total; i++){
+        if(listaDiaria[i].done){
+            feitos= feitos+1;
+        }
+    }
+    if(feitos !== 0){
+        porcentagem= Math.trunc(100*feitos/total);
+    }
+    console.log('porcentagem é '+ porcentagem);
     return(
         <FooterBar data-test="menu" >
             <p><StyledLink to={"/habitos"} data-test="habit-link">Hábitos</StyledLink></p>

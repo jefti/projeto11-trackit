@@ -8,7 +8,7 @@ import MeuHabito from "../components/meuHabito";
 import axios from "axios";
 
 export default function PaginaHabitos(){
-    const {usuario} = useContext(UserContext);
+    const {usuario,  RecarregarHabitosHoje, listaDiaria} = useContext(UserContext);
     const {token} = usuario;
 
     const [refresh, setRefresh] = useState(0);
@@ -20,6 +20,7 @@ export default function PaginaHabitos(){
     const HabitosPessoais = listaHabitos.map( el => <MeuHabito key = {el.id} el={el} recarregar={recarregar} desabilitado={desabilitado}></MeuHabito>);
 
     useEffect(()=>{
+        console.log('Iniciou a página de Hpabitos')
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
         let aut = 'Bearer '+ token;
         //console.log(aut);
@@ -41,7 +42,8 @@ export default function PaginaHabitos(){
 
     function recarregar(){
         let aux = refresh +1;
-        setRefresh(aux);
+        setRefresh(aux);   
+        RecarregarHabitosHoje();     
     }
 
     return (

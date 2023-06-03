@@ -10,7 +10,7 @@ export default function CadastrarHabito(props){
     const [cadastrar, setCadastrar] = useState(false);
     const [listaDias, setListaDias] = useState([false,false,false,false,false,false,false]);
 
-    const {usuario} = useContext(UserContext);
+    const {usuario, reset} = useContext(UserContext);
     const {token} = usuario;
 
     const [novoHabito, setNovoHabito] = useState('');
@@ -52,7 +52,6 @@ export default function CadastrarHabito(props){
                 setCadastrar(false);
                 setListaDias([false,false,false,false,false,false,false]);
                 setNovoHabito('');
-
                 desabilitado = false;
                 recarregar();
             });

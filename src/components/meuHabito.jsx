@@ -22,6 +22,7 @@ export default function MeuHabito(props){
             }};
             const promise = axios.delete(url,request);
             promise.then(resp => {
+                console.log('deletado');
                 console.log(resp);
                 recarregar();
             });
