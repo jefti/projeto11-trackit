@@ -8,7 +8,7 @@ export default function MeuHabito(props){
     const {usuario} = useContext(UserContext);
     const {token} = usuario;
     const {days, id, name} = props.el;
-    const {recarregar} = props;
+    const {recarregar, desabilitado} = props;
 
     const semana = ["D","S","T","Q","Q","S","S"];
 
@@ -36,7 +36,7 @@ export default function MeuHabito(props){
             <ListaDias>
                 {semana.map( (el,index)=> <DiaEstatico key= {"diaEstatico"+index} conteudo={el} estado ={days.includes(index)}></DiaEstatico>)}
             </ListaDias>
-            <ion-icon name="trash-outline" onClick={()=> excluir()} data-test="habit-delete-btn" ></ion-icon>
+        <button onClick={()=> excluir()} data-test="habit-delete-btn" disabled={desabilitado}><ion-icon name="trash-outline"></ion-icon></button>
         </MeuHabitoContainer>
     )
 }
@@ -57,8 +57,10 @@ const MeuHabitoContainer = styled.div`
     color: #666666;
     position: relative;
 
-    ion-icon {
+    button {
         position: absolute;
+        border: none;
+        background-color: white ;
         z-index: 80;
         top: 11px;
         right: 10px;

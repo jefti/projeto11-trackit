@@ -5,7 +5,9 @@ import axios from "axios";
 import UserContext from "../context/userContext";
 
 export default function CadastrarHabito(props){
-    const {setCadastrar, recarregar} = props;
+    let desabilitado = false;
+    const {recarregar} = props;
+    const [cadastrar, setCadastrar] = useState(false);
     const [listaDias, setListaDias] = useState([false,false,false,false,false,false,false]);
 
     const {usuario} = useContext(UserContext);
@@ -13,6 +15,12 @@ export default function CadastrarHabito(props){
 
     const [novoHabito, setNovoHabito] = useState('');
     const semana = ['D','S','T','Q','Q','S','S'];
+
+    function Limpar(){
+        setListaDias([false,false,false,false,false,false,false]);
+        setNovoHabito('');
+        setCadastrar(false);
+    }
 
     function EnviarServidor(e){
         e.preventDefault();
@@ -26,36 +34,54 @@ export default function CadastrarHabito(props){
         if(listaEnvio.length === 0){
             alert('selecione dias da semana para o hábito');
         } else {
+            desabilitado = true;
             let obj = {name: novoHabito, days: [...listaEnvio] };
             //console.log(obj.days);
             const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
             let aut = 'Bearer '+ token;
             const request = {headers:{
-                Authorization: aut
+            Authorization: aut
             }};
             const promise = axios.post(url,obj,request);
             promise.then(resp => {
                 //console.log(resp);
                 setCadastrar(false);
+                setListaDias([false,false,false,false,false,false,false]);
+                setNovoHabito('');
+
+                desabilitado = false;
                 recarregar();
             });
-            promise.catch( erro => console.log(erro));
+            promise.catch( erro => {
+                console.log(erro);
+                desabilitado = false;
+            });
 
 
         }
     }
 
     return (
-        <Cadastro onSubmit={ EnviarServidor} data-test="habit-create-container">
-                <InputEstilizado placeholder="nome do hábito" value={novoHabito} id='novoHabito' name='novoHabito' onChange={(e)=> setNovoHabito(e.target.value)} required data-test="habit-name-input"></InputEstilizado>
+
+    <>
+        <CreateBox>
+        <p>Meus hábitos</p>
+        <button disabled = {desabilitado} onClick={()=> cadastrar?Limpar():setCadastrar(true)} data-test="habit-create-btn">+</button>
+        
+        </CreateBox>
+        {cadastrar &&
+        <Cadastro onSubmit={EnviarServidor} data-test="habit-create-container">
+                <InputEstilizado placeholder="nome do hábito" value={novoHabito} id='novoHabito' name='novoHabito' onChange={(e)=> setNovoHabito(e.target.value)} required data-test="habit-name-input"  disabled = {desabilitado}></InputEstilizado>
                 <ListaDias>
-                    {listaDias.map( (el,i) => <DiaSemana key = {i} selecionado = {el} listaDias = {listaDias} setListaDias={setListaDias} index = {i} valor={semana[i]}></DiaSemana>)}
+                    {listaDias.map( (el,i) => <DiaSemana key = {i} selecionado = {el} listaDias = {listaDias} setListaDias={setListaDias} index = {i} valor={semana[i]} desabilitado={desabilitado}></DiaSemana>)}
                 </ListaDias>
                 <ContainerButtons>
-                    <div onClick={()=> setCadastrar(false)} data-test="habit-create-cancel-btn">Cancelar</div>
-                    <button type="submit" data-test="habit-create-save-btn">Salvar</button>
+                    <BtnCancelar type="button" onClick={()=> setCadastrar(false)} data-test="habit-create-cancel-btn"    disabled = {desabilitado}>Cancelar</BtnCancelar>
+                    <BtnEnviar  type="submit" data-test="habit-create-save-btn"    disabled = {desabilitado} >Salvar</BtnEnviar >
                 </ContainerButtons>
         </Cadastro>
+        }
+    </>
     )
 }
 
@@ -95,18 +121,10 @@ const ContainerButtons = styled.div`
     justify-content: end;
     align-items: flex-end;
     margin-top: 30px;
-    button{
-        width: 84px;
-        height: 35px;
-        background-color: #52B6FF;
-        border-radius: 5px;
-        border: none;
-        font-family: 'Lexend Deca';
-        font-weight: 400;
-        font-size: 16px;
-        color: white;
-    }
-    div{
+`
+const BtnCancelar = styled.button`
+    background-color: white;
+    border: none;
         width: 84px;
         height: 35px;
         display: flex;
@@ -118,5 +136,40 @@ const ContainerButtons = styled.div`
         font-size: 16px;
         color: #52B6FF;
         margin-right: 23px;
-    }
+`
+
+const BtnEnviar = styled.button`
+        width: 84px;
+        height: 35px;
+        background-color: #52B6FF;
+        border-radius: 5px;
+        border: none;
+        font-family: 'Lexend Deca';
+        font-weight: 400;
+        font-size: 16px;
+        color: white;
+
+`
+
+const CreateBox = styled.div`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 21px 17px;
+     p{
+        font-family: 'Lexend Deca';
+        font-weight: 400;
+        font-size: 23px;
+        color: #126BA5;
+     }
+     button{
+        width: 40px;
+        height: 35px;
+        border-radius: 5px;
+        border: none;
+        background-color: #52B6FF;
+        font-size: 27px;
+        color: white;
+     }
 `

@@ -8,14 +8,16 @@ import MeuHabito from "../components/meuHabito";
 import axios from "axios";
 
 export default function PaginaHabitos(){
-    const {usuario, setUsuario} = useContext(UserContext);
-    const {name, id, image,email,token} = usuario;
+    const {usuario} = useContext(UserContext);
+    const {token} = usuario;
 
     const [refresh, setRefresh] = useState(0);
-    const [cadastrar, setCadastrar] = useState(false);
     const [listaHabitos, setListaHabitos] = useState([]);
+
+    let desabilitado =false;
+
     console.log(listaHabitos);
-    const HabitosPessoais = listaHabitos.map( el => <MeuHabito key = {el.id} el={el} recarregar={recarregar}></MeuHabito>);
+    const HabitosPessoais = listaHabitos.map( el => <MeuHabito key = {el.id} el={el} recarregar={recarregar} desabilitado={desabilitado}></MeuHabito>);
 
     useEffect(()=>{
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
@@ -46,12 +48,8 @@ export default function PaginaHabitos(){
         <> 
             <Header/>
             <HabitosBody>
-                <CreateBox>
-                    <p>Meus hábitos</p>
-                    <button onClick={()=> cadastrar?setCadastrar(false):setCadastrar(true)} data-test="habit-create-btn">+</button>
-                    
-                </CreateBox>
-                {cadastrar && <CadastrarHabito setCadastrar={setCadastrar} recarregar={recarregar}/>}
+
+                <CadastrarHabito recarregar={recarregar}/>
 
 
                 {HabitosPessoais}

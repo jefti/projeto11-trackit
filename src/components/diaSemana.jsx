@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useState } from "react";
 
 export default function DiaSemana (props){
-    const {selecionado, listaDias, setListaDias, index, valor} = props;
+    const {selecionado, listaDias, setListaDias, index, valor, desabilitado} = props;
 
     function Ajustar(){
         let aux = [...listaDias];
@@ -16,13 +16,13 @@ export default function DiaSemana (props){
     }
     
     return (
-    <DiaBox onClick={()=> Ajustar()} selecionado={selecionado} data-test="habit-day">
+    <DiaBox onClick={()=> Ajustar()} type="button" selecionado={selecionado} data-test="habit-day" disabled={desabilitado}>
         {valor}
     </DiaBox>
     )
 }
 
-const DiaBox = styled.div`
+const DiaBox = styled.button`
         width: 30px;
         height: 30px;
         background: ${ props => props.selecionado ? "#CFCFCF" : "white"};
