@@ -66,12 +66,12 @@ export default function HabitoCheck(props){
             </div>
             <div>
             {(done)
-            ? <TextoInformacao data-test="today-habit-sequence" >Sequência atual: <span>{currentSequence}</span></TextoInformacao>
-            : <TextoInformacao data-test="today-habit-sequence" >Sequência atual: {currentSequence}</TextoInformacao>}
+            ? <TextoInformacao >Sequência atual: <span data-test="today-habit-sequence">{currentSequence} dias</span></TextoInformacao>
+            : <TextoInformacao data-test="today-habit-sequence" >Sequência atual: {currentSequence} dias</TextoInformacao>}
             
             {(currentSequence === highestSequence && currentSequence > 0)
-            ?<TextoInformacao data-test="today-habit-record">Seu recorde: <span>{highestSequence}</span></TextoInformacao>
-            : <TextoInformacao data-test="today-habit-record">Seu recorde: {highestSequence}</TextoInformacao>
+            ?<TextoInformacao >Seu recorde: <span data-test="today-habit-record">{highestSequence} dias</span></TextoInformacao>
+            : <TextoInformacao data-test="today-habit-record">Seu recorde: {highestSequence} dias</TextoInformacao>
             } 
             
             </div>
