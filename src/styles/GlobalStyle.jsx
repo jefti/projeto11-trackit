@@ -9,6 +9,8 @@ body{
     background-color: #FFF;
     font-family:'Lexend Deca';
 }
+
+
 `
 
 export default GlobalStyle;

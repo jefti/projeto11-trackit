@@ -23,6 +23,7 @@ export default function CadastrarHabito(props){
     }
 
     function EnviarServidor(e){
+        desabilitado = true;
         e.preventDefault();
         let listaEnvio = [];
         for(let index = 0; index < listaDias.length; index++ ){
@@ -33,8 +34,11 @@ export default function CadastrarHabito(props){
         
         if(listaEnvio.length === 0){
             alert('selecione dias da semana para o hábito');
-        } else {
-            desabilitado = true;
+            desabilitado = false;
+        } else if(novoHabito === ''){
+            alert('preencha o titulo do novo habito para continuar');
+            desabilitado = false;
+        }else{
             let obj = {name: novoHabito, days: [...listaEnvio] };
             //console.log(obj.days);
             const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
@@ -71,12 +75,12 @@ export default function CadastrarHabito(props){
         </CreateBox>
         {cadastrar &&
         <Cadastro onSubmit={EnviarServidor} data-test="habit-create-container">
-                <InputEstilizado placeholder="nome do hábito" value={novoHabito} id='novoHabito' name='novoHabito' onChange={(e)=> setNovoHabito(e.target.value)} required data-test="habit-name-input"  disabled = {desabilitado}></InputEstilizado>
+                <InputEstilizado placeholder="nome do hábito" value={novoHabito} id='novoHabito' name='novoHabito' onChange={(e)=> setNovoHabito(e.target.value)} data-test="habit-name-input"  disabled = {desabilitado}></InputEstilizado>
                 <ListaDias>
                     {listaDias.map( (el,i) => <DiaSemana key = {i} selecionado = {el} listaDias = {listaDias} setListaDias={setListaDias} index = {i} valor={semana[i]} desabilitado={desabilitado}></DiaSemana>)}
                 </ListaDias>
                 <ContainerButtons>
-                    <BtnCancelar type="button" onClick={()=> setCadastrar(false)} data-test="habit-create-cancel-btn"    disabled = {desabilitado}>Cancelar</BtnCancelar>
+                    <BtnCancelar type="button" onClick={()=> Limpar()} data-test="habit-create-cancel-btn"    disabled = {desabilitado}>Cancelar</BtnCancelar>
                     <BtnEnviar  type="submit" data-test="habit-create-save-btn"    disabled = {desabilitado} >Salvar</BtnEnviar >
                 </ContainerButtons>
         </Cadastro>

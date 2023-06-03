@@ -25,7 +25,7 @@ export default function PaginaLogin(){
             const url = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
             const promise = axios.post(url,obj);
             promise.then(resp => {
-                console.log(resp.data);
+                //console.log(resp.data);
                 const user = {...resp.data};
                 setUsuario(user);
                 nav("/hoje");

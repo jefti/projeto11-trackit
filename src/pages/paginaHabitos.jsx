@@ -35,7 +35,7 @@ export default function PaginaHabitos(){
             setListaHabitos(listaResposta);
         });
 
-        promise.catch((err)=> console.log('erro'));
+        promise.catch((err)=> console.log(err));
     },
     [refresh]);
 

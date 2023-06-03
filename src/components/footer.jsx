@@ -1,11 +1,20 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import UserContext from "../context/userContext";
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import BarraProgresso from "./barraProgresso";
 
 export default function Footer(){
+    const {listaDiaria,porcentagem} = useContext(UserContext);
+
     return(
         <FooterBar data-test="menu" >
             <p><StyledLink to={"/habitos"} data-test="habit-link">Hábitos</StyledLink></p>
-            <StyledHoje to={"/hoje"} data-test="today-link">Hoje</StyledHoje>
+            <StyledHoje to={"/hoje"} data-test="today-link" >
+                <BarraProgresso porcentagem={porcentagem}></BarraProgresso>
+            </StyledHoje>
             <p><StyledLink to={"/historico"} data-test="history-link">Histórico</StyledLink></p>
         </FooterBar>
     );
@@ -46,15 +55,10 @@ const StyledHoje = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-family: 'Lexend Deca';
-    font-size: 18px;
-    line-height: 22px;
-    color: #FFFFFF;
-
     position: absolute;
     bottom: 10px;
     left: 50%;
     transform: translate(-50%, 0);
     text-decoration: none;
+
 `
